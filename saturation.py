@@ -11,7 +11,7 @@ class Matrix:
     """ Only supports 2d matrices right now. """
 
     def __init__(self, matrix: Pattern) -> None:
-        self.matrix: NDArray[np.int_] = matrix
+        self.matrix: Pattern = matrix
         self.weight: int = np.concatenate(matrix).sum()
         self._rng = np.random.default_rng()
 
