@@ -33,6 +33,22 @@ Q7 = Matrix.from_str_list([
     "0101"
 ])
 
+Q8 = Matrix.from_str_list([
+    "11001",
+    "00001",
+    "00100",
+    "10000",
+    "10011"
+])
+
+P_Q8 = Matrix.from_str_list([
+    "01001",
+    "00001",
+    "00100",
+    "10000",
+    "10010"
+])
+
 P2 = Matrix.from_str_list([
     "1011",
     "1101"
@@ -107,6 +123,18 @@ W_H_Q7 = Matrix(Matrix.from_str_list([
     "0010101"
 ]))
 
+W_V_Q8 = Matrix(Matrix.from_str_list([
+    "111001000000",
+    "000001000000",
+    "110000000001",
+    "000100110011",
+    "000000000000",
+    "110011001000",
+    "100000000011",
+    "000000100000",
+    "000000100111"
+]))
+
 W2 = Matrix(Matrix.from_str_list([
     "011011",
     "111010",
@@ -122,4 +150,7 @@ if __name__ == "__main__":
     assert W_H_Q6.is_horizontal_witness(Q6, 3)
     assert W_V_Q7.is_vertical_witness(Q7, 2)
     assert W_H_Q7.is_horizontal_witness(Q7, 3)
+    assert not W_V_Q8.contains_pattern(P_Q8)
+    assert W_V_Q8.is_row_expandable(Q8, 4)
     assert not W2.contains_pattern(P2)
+    print("Proofs verified.")
