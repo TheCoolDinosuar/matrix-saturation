@@ -63,11 +63,8 @@ class Matrix:
                 self.matrix[a][b] = 0
         return saturating, allowed_spots
 
-    def is_vertical_witness(self, pattern: Pattern, row_idx: int) -> bool:
-        """ Checks if matrix is a vertical witness for pattern.
-            row_idx: is index of empty row claimed to be expandable. """
-        if self.contains_pattern(pattern):
-            return False
+    def is_row_expandable(self, pattern: Pattern, row_idx: int) -> bool:
+        """ Checks if row at row_idx is expandable wrt pattern. """
         for col_idx in range(self.matrix.shape[1]):
             self.add_one((row_idx, col_idx))
             if not self.contains_pattern(pattern):
@@ -75,17 +72,26 @@ class Matrix:
             self.remove_one((row_idx, col_idx))
         return True
 
-    def is_horizontal_witness(self, pattern: Pattern, col_idx: int) -> bool:
-        """ Checks if matrix is a horizontal witness for pattern.
-            col_idx: index of empty col claimed to be expandable. """
-        if self.contains_pattern(pattern):
-            return False
+    def is_col_expandable(self, pattern: Pattern, col_idx: int) -> bool:
+        """ Checks if col at col_idx is expandable wrt pattern. """
         for row_idx in range(self.matrix.shape[0]):
             self.add_one((row_idx, col_idx))
             if not self.contains_pattern(pattern):
                 return False
             self.remove_one((row_idx, col_idx))
         return True
+
+    def is_vertical_witness(self, pattern: Pattern, row_idx: int) -> bool:
+        """ Checks if matrix is a vertical witness for pattern.
+            row_idx: is index of empty row claimed to be expandable. """
+        return not self.contains_pattern(pattern) \
+            and self.is_row_expandable(pattern, row_idx)
+
+    def is_horizontal_witness(self, pattern: Pattern, col_idx: int) -> bool:
+        """ Checks if matrix is a horizontal witness for pattern.
+            col_idx: index of empty col claimed to be expandable. """
+        return not self.contains_pattern(pattern) \
+            and self.is_col_expandable(pattern, col_idx)
 
     def is_witness(self, pattern: Pattern, row_idx: int, col_idx: int) -> bool:
         """ Checks if matrix is a witness for pattern. """
