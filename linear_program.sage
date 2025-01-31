@@ -30,14 +30,6 @@ def solve_sat(m: int, n: int, P: Pattern) -> int:
     program = MixedIntegerLinearProgram()
     x = program.new_variable(binary=True)
     y = program.new_variable(binary=True)
-
-    for P_copy in P_copies:
-        program.add_constraint(
-            y[P_copy] <= 1
-        )
-        program.add_constraint(
-            y[P_copy] >= 0
-        )
         
     for mat_idx in product(range(m), range(n)):
         program.add_constraint(
